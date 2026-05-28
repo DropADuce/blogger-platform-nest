@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, SortOrder } from 'mongoose';
 
@@ -38,7 +38,7 @@ export class BlogsQueryRepository {
   async findBlogById(id: string): Promise<BlogViewModel | null> {
     const blog = await this.blogModel.findById(id).lean().exec();
 
-    if (!blog) return null;
+    if (!blog) throw new NotFoundException('Блог не найден');
 
     return this.mapBlogToViewModel(blog);
   }

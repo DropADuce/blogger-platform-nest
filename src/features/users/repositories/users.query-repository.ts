@@ -68,13 +68,11 @@ export class UsersQueryRepository {
       this.userModel.countDocuments(filter),
     ]);
 
-    return {
-      users: createPaginatedResult({
-        count,
-        pageSize: params.pagination.pageSize,
-        pageNumber: params.pagination.pageNumber,
-        items: users.map(this.mapUserToViewModel),
-      }),
-    };
+    return createPaginatedResult({
+      count,
+      pageSize: params.pagination.pageSize,
+      pageNumber: params.pagination.pageNumber,
+      items: users.map(this.mapUserToViewModel),
+    });
   }
 }
