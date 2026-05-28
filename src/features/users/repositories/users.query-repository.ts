@@ -37,7 +37,10 @@ export class UsersQueryRepository {
   }): QueryFilter<User> {
     return params.login || params.email
       ? {
-          $or: [{ login: params.login }, { email: params.email }],
+          $or: [
+            { login: { $regex: params.login, $options: 'i' } },
+            { email: { $regex: params.email, $options: 'i' } },
+          ],
         }
       : {};
   }

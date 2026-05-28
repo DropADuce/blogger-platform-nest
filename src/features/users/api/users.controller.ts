@@ -40,5 +40,7 @@ export class UsersController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@Param('id') id: string) {
     await this.usersService.deleteUser(id);
+
+    return;
   }
 }
