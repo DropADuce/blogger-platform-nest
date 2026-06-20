@@ -11,7 +11,8 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from '../domain/users.service';
-import { CreateUserDTO, GetUsersQueryParams } from './users.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { GetUsersQueryParams } from './users.dto';
 import { UsersQueryRepository } from '../repositories/users.query-repository';
 import { parseSortPagination } from '../../../shared/pagination';
 

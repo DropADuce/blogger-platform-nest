@@ -35,14 +35,14 @@ export class UsersQueryRepository {
     login: string;
     email: string;
   }): QueryFilter<User> {
-    return params.login || params.email
-      ? {
-          $or: [
-            { login: { $regex: params.login, $options: 'i' } },
-            { email: { $regex: params.email, $options: 'i' } },
-          ],
-        }
-      : {};
+    const conditions: Array<object> = [];
+    if (params.login)
+      conditions.push({ login: { $regex: params.login, $options: 'i' } });
+
+    if (params.email)
+      conditions.push({ email: { $regex: params.email, $options: 'i' } });
+
+    return conditions.length ? { $or: conditions } : {};
   }
 
   async getUserById(id: string): Promise<UserViewModel | null> {

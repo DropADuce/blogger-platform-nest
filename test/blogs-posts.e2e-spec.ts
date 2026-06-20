@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 
 import { AppModule } from '../src/app/app.module';
@@ -470,13 +470,10 @@ describe('Blogs API (e2e)', () => {
       expect(res.body.pagesCount).toBe(2);
     });
 
-    it('должен вернуть пустой список для несуществующего blogId', async () => {
-      const res = await request(app.getHttpServer())
+    it('должен вернуть 404 для несуществующего blogId', async () => {
+      await request(app.getHttpServer())
         .get('/blogs/507f1f77bcf86cd799439011/posts')
-        .expect(200);
-
-      expect(res.body.totalCount).toBe(0);
-      expect(res.body.items).toHaveLength(0);
+        .expect(HttpStatus.NOT_FOUND);
     });
   });
 

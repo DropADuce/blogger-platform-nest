@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import request from 'supertest';
 
 import { AppModule } from '../src/app/app.module';
-import { Comment } from '../src/features/comments/domain/comment.schema';
+import { Comment } from '../src/modules/blogger-platform/domain/comment.entity';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
