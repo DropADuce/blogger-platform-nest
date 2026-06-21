@@ -10,7 +10,7 @@ enum SortFields {
 export class GetUsersQueryParams extends BaseQueryParams {
   @IsEnum(SortFields)
   @IsOptional()
-  sortBy: SortFields.CreatedAt;
+  sortBy: SortFields = SortFields.CreatedAt;
 
   @IsString()
   @IsOptional()

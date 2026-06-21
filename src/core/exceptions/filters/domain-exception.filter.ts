@@ -33,7 +33,11 @@ export class DomainHTTPExceptionFilter implements ExceptionFilter {
       this.domainToHTTPStatusMap[exception.code] ?? HttpStatus.I_AM_A_TEAPOT,
     );
 
-    if (exception.code === DomainExceptionCode.ValidationError) {
+    if (
+      exception.code === DomainExceptionCode.ValidationError ||
+      (exception.code === DomainExceptionCode.BadRequest &&
+        exception.extensions.length > 0)
+    ) {
       return result.json({ errorsMessages: exception.extensions });
     }
 

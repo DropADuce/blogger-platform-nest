@@ -15,7 +15,7 @@ export const PASSWORD_CONSTRAINTS = {
 };
 
 export const EMAIL_CONSTRAINTS = {
-  match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+  match: /^[\w\-.+]+@([\w-]+\.)+[\w-]{2,4}$/,
 };
 
 @Schema({ timestamps: { createdAt: true } })
