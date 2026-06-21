@@ -1,16 +1,17 @@
 {
   "version": 2,
   "name": "blogger-platform",
+  "buildCommand": "npm run build",
   "builds": [
     {
-      "src": "src/main.ts",
+      "src": "dist/main.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/main.ts"
+      "dest": "dist/main.js"
     }
   ]
 }
