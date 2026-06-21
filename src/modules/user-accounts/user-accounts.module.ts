@@ -9,11 +9,11 @@ import { UsersRepository } from './infrastructure/users.repository';
 import { UsersQueryRepository } from './infrastructure/query/users.query-repository';
 import { UsersExternalRepository } from './infrastructure/external-query/users.external-repository';
 import { JwtModule } from '@nestjs/jwt';
-import { NotificationsModule } from 'modules/notifications/notificatoins.module';
-import { AuthController } from 'modules/user-accounts/api/auth.controller';
-import { AuthService } from 'modules/user-accounts/application/auth.service';
-import { LocalStrategy } from 'modules/user-accounts/guards/local/local.strategy';
-import { JwtStrategy } from 'modules/user-accounts/guards/bearer/jwt.strategy';
+import { NotificationsModule } from '../notifications/notificatoins.module';
+import { AuthController } from './api/auth.controller';
+import { AuthService } from './application/auth.service';
+import { LocalStrategy } from './guards/local/local.strategy';
+import { JwtStrategy } from './guards/bearer/jwt.strategy';
 
 @Module({
   imports: [

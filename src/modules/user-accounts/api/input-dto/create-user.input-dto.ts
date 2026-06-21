@@ -4,8 +4,8 @@ import {
   LOGIN_CONSTRAINTS,
   PASSWORD_CONSTRAINTS,
 } from '../../domain/user.entity';
-import { IsStringWithTrim } from 'core/decorators/validation/is-string-with-trim';
-import { Trim } from 'core/decorators/transform/trim';
+import { IsStringWithTrim } from '../../../../core/decorators/validation/is-string-with-trim';
+import { Trim } from '../../../../core/decorators/transform/trim';
 
 export class CreateUserInputDto {
   @IsStringWithTrim({

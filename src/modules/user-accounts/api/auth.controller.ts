@@ -15,12 +15,12 @@ import {
   NewPasswordInputDto,
   PasswordRecoveryInputDto,
 } from './input-dto/create-user.input-dto';
-import { ExtractUserFromRequest } from 'modules/user-accounts/guards/decorators/param/extract-user-from-request';
-import { UserContextDTO } from 'modules/user-accounts/guards/dto/user-context.dto';
-import { LocalAuthGuard } from 'modules/user-accounts/guards/local/local-auth.guard';
-import { AuthService } from 'modules/user-accounts/application/auth.service';
-import { UsersService } from 'modules/user-accounts/application/users.service';
-import { JwtAuthGuard } from 'modules/user-accounts/guards/bearer/jwt-auth.guard';
+import { ExtractUserFromRequest } from '../guards/decorators/param/extract-user-from-request';
+import { UserContextDTO } from '../guards/dto/user-context.dto';
+import { LocalAuthGuard } from '../guards/local/local-auth.guard';
+import { AuthService } from '../application/auth.service';
+import { UsersService } from '../application/users.service';
+import { JwtAuthGuard } from '../guards/bearer/jwt-auth.guard';
 import { UsersQueryRepository } from '../infrastructure/query/users.query-repository';
 
 @Controller('auth')

@@ -5,13 +5,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppController } from './api/app.controller';
 import { AppService } from './application/app.service';
-import { SETTINGS } from 'core/settings/settings';
-import { UserAccountsModule } from 'modules/user-accounts/user-accounts.module';
-import { BloggerPlatformModule } from 'modules/blogger-platform/blogger-platform.module';
-import { TestingModule } from 'modules/testing/testing.module';
+import { SETTINGS } from '../core/settings/settings';
+import { UserAccountsModule } from '../modules/user-accounts/user-accounts.module';
+import { BloggerPlatformModule } from '../modules/blogger-platform/blogger-platform.module';
+import { TestingModule } from '../modules/testing/testing.module';
 import { APP_FILTER } from '@nestjs/core';
-import { AllHTTPExceptionsFilter } from 'core/exceptions/filters/all-exceptions.filter';
-import { DomainHTTPExceptionFilter } from 'core/exceptions/filters/domain-exception.filter';
+import { AllHTTPExceptionsFilter } from '../core/exceptions/filters/all-exceptions.filter';
+import { DomainHTTPExceptionFilter } from '../core/exceptions/filters/domain-exception.filter';
 
 @Module({
   imports: [

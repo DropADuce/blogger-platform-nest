@@ -9,10 +9,10 @@ import {
   DomainException,
   DomainExceptionCode,
   Extension,
-} from 'core/exceptions/domain-exception';
-import { EmailService } from 'modules/notifications/application/email.service';
+} from '../../../core/exceptions/domain-exception';
+import { EmailService } from '../../notifications/application/email.service';
 import { ConfirmEmailDTO } from '../dto/confirm-email.dto';
-import { ResendRegistrationEmailDTO } from 'modules/user-accounts/dto/resend-regestration-email.dto';
+import { ResendRegistrationEmailDTO } from '../dto/resend-regestration-email.dto';
 import { PasswordRecoveryDto } from '../dto/password-recovery.dto';
 import { NewPasswordDto } from '../dto/new-password.dto';
 

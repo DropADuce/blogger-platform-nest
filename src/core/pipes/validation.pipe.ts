@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import {
   DomainException,
   DomainExceptionCode,
-} from 'core/exceptions/domain-exception';
+} from '../exceptions/domain-exception';
 
 export type ErrorMessage = {
   field: string;

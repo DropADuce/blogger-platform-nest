@@ -6,7 +6,10 @@ import { GetUsersQueryParams } from '../../api/input-dto/get-users-query-params.
 import { QueryFilter } from 'mongoose';
 import { UserViewDto } from '../../api/view-dto/user.view-dto';
 import { PaginatedViewDto } from '../../../../core/dto/base.paginated.view-dto';
-import { DomainException, DomainExceptionCode } from 'core/exceptions';
+import {
+  DomainException,
+  DomainExceptionCode,
+} from '../../../../core/exceptions';
 import { MeDTO } from '../../api/view-dto/me.dto';
 
 @Injectable()
