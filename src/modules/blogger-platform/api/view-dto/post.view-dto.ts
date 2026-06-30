@@ -11,7 +11,10 @@ export class PostViewDto {
   createdAt: string;
   extendedLikesInfo: ExtendedLikesViewDto;
 
-  static mapToView(post: PostDocument): PostViewDto {
+  static mapToView(
+    post: PostDocument,
+    likes: ExtendedLikesViewDto,
+  ): PostViewDto {
     const dto = new PostViewDto();
 
     dto.id = post._id.toString();
@@ -21,13 +24,7 @@ export class PostViewDto {
     dto.blogId = post.blogId;
     dto.blogName = post.blogName;
     dto.createdAt = post.createdAt.toISOString();
-
-    dto.extendedLikesInfo = {
-      likesCount: 0,
-      dislikesCount: 0,
-      myStatus: 'None',
-      newestLikes: [],
-    };
+    dto.extendedLikesInfo = likes;
 
     return dto;
   }

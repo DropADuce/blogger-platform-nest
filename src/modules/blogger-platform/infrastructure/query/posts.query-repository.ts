@@ -1,25 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { QueryFilter } from 'mongoose';
 
-import { Post, PostDocument, PostModel } from '../../domain/post.entity';
-import { PostViewDto } from '../../api/view-dto/post.view-dto';
+import { Post, PostModel } from '../../domain/post.entity';
 import { GetPostsQueryParams } from '../../api/input-dto/get-posts-query-params.input-dto';
-import { PaginatedViewDto } from '../../../../core/dto/base.paginated.view-dto';
+import { DomainException, DomainExceptionCode } from 'core/exceptions';
 
 @Injectable()
 export class PostsQueryRepository {
   constructor(@InjectModel(Post.name) private readonly post: PostModel) {}
 
-  async findPostById(id: string): Promise<PostViewDto> {
-    const post = await this.post.findById(id).lean().exec();
-    if (!post) throw new NotFoundException('Пост не найден');
-    return PostViewDto.mapToView(post as PostDocument);
-  }
-
-  async getAll(
-    query: GetPostsQueryParams,
-  ): Promise<PaginatedViewDto<PostViewDto>> {
+  async getAllRaw(query: GetPostsQueryParams) {
     const [posts, count] = await Promise.all([
       this.post
         .find()
@@ -29,18 +20,10 @@ export class PostsQueryRepository {
       this.post.countDocuments(),
     ]);
 
-    return PaginatedViewDto.mapToView({
-      items: posts.map(PostViewDto.mapToView),
-      page: query.pageNumber,
-      size: query.pageSize,
-      totalCount: count,
-    });
+    return { posts, count };
   }
 
-  async getByBlogId(
-    blogId: string,
-    query: GetPostsQueryParams,
-  ): Promise<PaginatedViewDto<PostViewDto>> {
+  async getByBlogIdRaw(blogId: string, query: GetPostsQueryParams) {
     const filter: QueryFilter<Post> = { blogId };
 
     const [posts, count] = await Promise.all([
@@ -52,11 +35,18 @@ export class PostsQueryRepository {
       this.post.countDocuments(filter),
     ]);
 
-    return PaginatedViewDto.mapToView({
-      items: posts.map(PostViewDto.mapToView),
-      page: query.pageNumber,
-      size: query.pageSize,
-      totalCount: count,
-    });
+    return { posts, count };
+  }
+
+  async findPostByIdRawOrFail(id: string) {
+    const post = await this.post.findById(id);
+
+    if (!post)
+      throw new DomainException({
+        code: DomainExceptionCode.NotFound,
+        message: 'Пост не найден',
+      });
+
+    return post;
   }
 }

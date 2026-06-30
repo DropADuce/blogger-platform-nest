@@ -4,17 +4,33 @@ import { HydratedDocument, Model } from 'mongoose';
 import { CreateBlogDomainDto } from './dto/create-blog.domain.dto';
 import { UpdateBlogDomainDto } from './dto/update-blog.domain.dto';
 
+export const BLOG_NAME_MIN_LENGTH_CONSTRAINTS = 1;
+export const BLOG_NAME_MAX_LENGTH_CONSTRAINTS = 15;
+
+export const BLOG_DESCRIPTION_MIN_LENGTH_CONSTRAINTS = 1;
+export const BLOG_DESCRIPTION_MAX_LENGTH_CONSTRAINTS = 500;
+
+export const BLOG_WEBSITE_MAX_LENGTH_CONSTRAINTS = 100;
+
 @Schema({ timestamps: { createdAt: true } })
 export class Blog {
   createdAt: Date;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: BLOG_NAME_MIN_LENGTH_CONSTRAINTS,
+    maxlength: BLOG_NAME_MAX_LENGTH_CONSTRAINTS,
+  })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: BLOG_DESCRIPTION_MIN_LENGTH_CONSTRAINTS,
+    maxlength: BLOG_DESCRIPTION_MAX_LENGTH_CONSTRAINTS,
+  })
   description: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, maxlength: BLOG_WEBSITE_MAX_LENGTH_CONSTRAINTS })
   websiteUrl: string;
 
   @Prop({ default: false })

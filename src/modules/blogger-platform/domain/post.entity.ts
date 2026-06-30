@@ -4,17 +4,38 @@ import { HydratedDocument, Model } from 'mongoose';
 import { CreatePostDomainDto } from './dto/create-post.domain.dto';
 import { UpdatePostDomainDto } from './dto/update-post.domain.dto';
 
+export const POST_TITLE_MIN_CONSTRAINTS = 1;
+export const POST_TITLE_MAX_CONSTRAINTS = 30;
+
+export const POST_SHORT_DESCRIPTION_MIN_CONSTRAINTS = 1;
+export const POST_SHORT_DESCRIPTION_MAX_CONSTRAINTS = 100;
+
+export const POST_CONTENT_MIN_CONSTRAINTS = 1;
+export const POST_CONTENT_MAX_CONSTRAINTS = 1_000;
+
 @Schema({ timestamps: { createdAt: true } })
 export class Post {
   createdAt: Date;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: POST_TITLE_MIN_CONSTRAINTS,
+    maxlength: POST_TITLE_MAX_CONSTRAINTS,
+  })
   title: string;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: POST_SHORT_DESCRIPTION_MIN_CONSTRAINTS,
+    maxlength: POST_SHORT_DESCRIPTION_MAX_CONSTRAINTS,
+  })
   shortDescription: string;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: POST_CONTENT_MIN_CONSTRAINTS,
+    maxlength: POST_CONTENT_MAX_CONSTRAINTS,
+  })
   content: string;
 
   @Prop({ required: true })

@@ -5,8 +5,10 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { Response } from 'express';
 
 import {
   ConfirmEmailDTO,
@@ -40,7 +42,15 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
-  async login(@ExtractUserFromRequest() user: UserContextDTO) {
+  async login(
+    @Res({ passthrough: true }) res: Response,
+    @ExtractUserFromRequest() user: UserContextDTO,
+  ) {
+    res.cookie('refreshToken', 'refreshToken', {
+      secure: true,
+      httpOnly: true,
+    });
+
     return await this.authService.login(user.id);
   }
 

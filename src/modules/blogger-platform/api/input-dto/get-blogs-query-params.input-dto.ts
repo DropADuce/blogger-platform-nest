@@ -1,8 +1,19 @@
-import { BaseQueryParams } from '../../../../core/dto/base.query-params.input-dto';
+import { BaseQueryParams } from 'core/dto/base.query-params.input-dto';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 
-type SortFields = 'name' | 'description' | 'websiteUrl' | 'createdAt';
+enum SortFields {
+  Name = 'name',
+  Description = 'description',
+  WebsiteUrl = 'websiteUrl',
+  CreatedAt = 'createdAt',
+}
 
 export class GetBlogsQueryParams extends BaseQueryParams {
-  sortBy: SortFields = 'createdAt';
+  @IsEnum(SortFields)
+  @IsOptional()
+  sortBy: SortFields = SortFields.CreatedAt;
+
+  @IsString()
+  @IsOptional()
   searchNameTerm: string | null = null;
 }

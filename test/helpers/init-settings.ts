@@ -6,6 +6,8 @@ import { EmailService } from 'modules/notifications/application/email.service';
 import { EmailServiceMock } from '../mocks/email-service.mock';
 import { appSetup } from 'app/setup/app.setup';
 import { UsersTestingManager } from './users-testing-manager';
+import { BlogsTestingManager } from './blogs-testing-manager';
+import { PostsTestingManager } from './posts-testing-manager';
 import { deleteAllData } from './delete-all-data';
 
 export const initSettings = async (
@@ -32,6 +34,8 @@ export const initSettings = async (
   const dbConnection = app.get(getConnectionToken());
   const httpServer = app.getHttpServer();
   const userTestManager = new UsersTestingManager(app);
+  const blogsTestingManager = new BlogsTestingManager(app);
+  const postsTestingManager = new PostsTestingManager(app);
 
   await deleteAllData(app);
 
@@ -40,5 +44,7 @@ export const initSettings = async (
     dbConnection,
     httpServer,
     userTestManager,
+    blogsTestingManager,
+    postsTestingManager,
   };
 };

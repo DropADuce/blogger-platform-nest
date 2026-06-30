@@ -1,15 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { QueryFilter } from 'mongoose';
 
-import {
-  Comment,
-  CommentDocument,
-  CommentModel,
-} from '../../domain/comment.entity';
-import { CommentViewDto } from '../../api/view-dto/comment.view-dto';
+import { Comment, CommentModel } from '../../domain/comment.entity';
 import { GetCommentsQueryParams } from '../../api/input-dto/get-comments-query-params.input-dto';
-import { PaginatedViewDto } from '../../../../core/dto/base.paginated.view-dto';
+import { DomainException, DomainExceptionCode } from 'core/exceptions';
 
 @Injectable()
 export class CommentsQueryRepository {
@@ -17,15 +12,16 @@ export class CommentsQueryRepository {
     @InjectModel(Comment.name) private readonly comment: CommentModel,
   ) {}
 
-  async findCommentById(id: string) {
+  async findByIdOrFail(id: string) {
     const comment = await this.comment.findById(id);
 
-    if (!comment) throw new NotFoundException('Комментарий не найден');
+    if (!comment)
+      throw new DomainException({
+        code: DomainExceptionCode.NotFound,
+        message: 'Комментарий не найден',
+      });
 
-    return CommentViewDto.mapToView({
-      comment,
-      likes: { likesCount: 0, dislikesCount: 0, myStatus: 'None' },
-    });
+    return comment;
   }
 
   async findCommentsByPost(params: {
@@ -39,24 +35,10 @@ export class CommentsQueryRepository {
         .find(filter)
         .sort({ [params.query.sortBy]: params.query.sortDirection })
         .skip(params.query.calculateSkip())
-        .limit(params.query.pageSize)
-        .lean()
-        .exec(),
+        .limit(params.query.pageSize),
       this.comment.countDocuments(filter),
     ]);
 
-    const items = comments.map((comment: CommentDocument) =>
-      CommentViewDto.mapToView({
-        comment,
-        likes: { likesCount: 0, dislikesCount: 0, myStatus: 'None' },
-      }),
-    );
-
-    return PaginatedViewDto.mapToView({
-      items,
-      page: params.query.pageNumber,
-      size: params.query.pageSize,
-      totalCount: count,
-    });
+    return { comments, count };
   }
 }

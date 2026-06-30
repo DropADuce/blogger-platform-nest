@@ -2,6 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Model } from 'mongoose';
 
 import { CreateCommentDomainDto } from './dto/create-comment.domain.dto';
+import { UpdateCommentDomainDTO } from 'modules/blogger-platform/domain/dto/update-comment.domain-dto';
+
+export const CONTENT_CONSTRAINTS_MIN = 20;
+export const CONTENT_CONSTRAINTS_MAX = 300;
 
 @Schema({ timestamps: { createdAt: true } })
 export class Comment {
@@ -10,7 +14,11 @@ export class Comment {
   @Prop({ required: true })
   postId: string;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    minlength: CONTENT_CONSTRAINTS_MIN,
+    maxlength: CONTENT_CONSTRAINTS_MAX,
+  })
   content: string;
 
   @Prop({ required: true })
@@ -34,6 +42,10 @@ export class Comment {
     comment.userLogin = dto.userLogin;
 
     return comment as CommentDocument;
+  }
+
+  update(dto: UpdateCommentDomainDTO) {
+    this.content = dto.content;
   }
 }
 
